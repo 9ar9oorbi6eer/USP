@@ -1,21 +1,18 @@
-CC=gcc
-CFLAGS=-Wall -Wextra -g   
+CC = gcc
+CFLAGS = -Wall -g
 
-SRCS=USPassignment.c functions.c
-OBJS=$(SRCS:.c=.o)
-DEPS=functions.h
+all: USPassignment
 
-TARGET=mssv
+USPassignment: USPassignment.o functions.o
+	$(CC) $(CFLAGS) -o USPassignment USPassignment.o functions.o
 
-.PHONY: all clean
+USPassignment.o: USPassignment.c
+	$(CC) $(CFLAGS) -c USPassignment.c
 
-all: $(TARGET)
-
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-
-%.o: %.c $(DEPS)
-	$(CC) $(CFLAGS) -c -o $@ $<
+functions.o: functions.c functions.h
+	$(CC) $(CFLAGS) -c functions.c
 
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f USPassignment USPassignment.o functions.o
+
+.PHONY: all clean
